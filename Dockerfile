@@ -8,7 +8,8 @@ ENV RELEASE emailrelay_${VERSION}_${ARCH}
 ENV PACKAGE ${RELEASE}.deb
 ENV URL http://sourceforge.net/projects/emailrelay/files/emailrelay/${VERSION}/${PACKAGE}/download
 
-RUN curl -o $PACKAGE -L "$URL" && \
+RUN apk add --update libstdc++ && \
+    curl -o $PACKAGE -L "$URL" && \
     dpkg -i $PACKAGE && \
     rm -rf $PACKAGE && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/* && \
@@ -17,6 +18,8 @@ RUN curl -o $PACKAGE -L "$URL" && \
 USER nobody
 
 ENV HOME /app
-ENV EMAILRELAY_OPTS ""
+# ENV EMAILRELAY_OPTS ""
 
-CMD ["/usr/sbin/emailrelay", "$EMAILRELAY_OPTS"]
+COPY run.sh /app/run.sh
+
+CMD ["/app/run.sh"]

@@ -15,7 +15,7 @@ RUN apk add --update libstdc++ && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/* && \
     mkdir -p /var/spool/emailrelay
 
-USER nobody
+# USER nobody
 
 ENV HOME /app
 # ENV EMAILRELAY_OPTS ""
